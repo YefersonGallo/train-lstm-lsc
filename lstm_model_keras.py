@@ -27,10 +27,10 @@ tfc.run(
 
 s3 = S3FileSystem(anon=True)
 
-checkpoint_path = os.path.join("gs://", gcp_bucket, "lsc-train-1", "epochs", "save_at_{epoch}")
+checkpoint_path = os.path.join("gs://", gcp_bucket, "lsc-train-2", "epochs", "save_at_{epoch}")
 
 tensorboard_path = os.path.join(  # Timestamp included to enable timeseries graphs
-    "gs://", gcp_bucket, "logs-1", datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    "gs://", gcp_bucket, "logs-2", datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 )
 
 callbacks = [
@@ -42,8 +42,7 @@ callbacks = [
     EarlyStopping(monitor="loss", baseline=0.8),
 ]
 
-actions = np.array(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's',
-                    't', 'u', 'v', 'w', 'x', 'y', 'z'])
+actions = np.array(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'ñ', 'u', 'v', 'w', 'z'])
 
 bucket = 'lsc-dataset'
 
@@ -85,7 +84,7 @@ model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['categ
 
 model.fit(X_train, y_train, epochs=10000, callbacks=callbacks)
 
-save_path = os.path.join("gs://", gcp_bucket, "lsc-train-1", "model")
+save_path = os.path.join("gs://", gcp_bucket, "lsc-train-2", "model")
 
 if tfc.remote():
     model.save(save_path)
